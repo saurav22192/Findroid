@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Findroid</string>
+    <string name="title_activity_registration">Registration</string>
+    <string name="title_activity_help">help</string>
+    <string name="title_activity_trusted_contacts">TrustedContacts</string>
+    <string name="title_activity_view_profile">My Profile</string>
+    <string name="title_activity_telephony">telephony</string>
+    <string name="hello">Hello World, AndroidTelephonyManager!</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="submit">Submit</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="delete">Delete</string>
+    <string name="title_activity_maps">Map</string>
+
+</resources>

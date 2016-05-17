@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/holo_blue_dark"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true">
+
+        <ImageView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"/>
+
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Locate Me"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="25dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+
+            android:layout_gravity="center_horizontal|center_vertical"/>
+
+
+    </LinearLayout>
+
+
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+        android:layout_weight="0.13">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="3"
+
+            >
+
+
+            <TableRow>
+                <TextView
+                    android:text="MOBILE COUNTRY CODE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1" />
+                <TextView
+                    android:width="200px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mcc"
+                    android:layout_column="2"
+                    android:layout_span="2" />
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="MOBILE NETWORK CODE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+
+                    />
+                <TextView
+                    android:width="100px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                android:id="@+id/mnc"
+                    android:layout_column="2"
+                    android:layout_span="2" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="LOCATION AREA CODE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+
+                    />
+                <TextView
+                    android:width="100px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lac"
+                    android:layout_column="2"
+                    android:layout_span="2" />
+
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="CELL ID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+
+                    />
+                <TextView
+                    android:width="100px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cid"
+                    android:layout_span="2" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+
+                    />
+                <TextView
+                    android:width="100px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/geo"
+                    android:layout_span="2" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <Button
+                    android:id="@+id/map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:text="View On Map"
+                    android:layout_column="1" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Refresh"
+                    android:id="@+id/Refresh"
+                    android:layout_column="2" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Back"
+                    android:id="@+id/mapback"
+                    android:layout_column="3" />
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tester"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:width="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/remark"
+        android:visibility="invisible" />
+
+
+</LinearLayout>

@@ -1,0 +1,338 @@
+package com.cyberri.findroid;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class telephony extends Activity {
+
+    public class OpenCellID {
+        String mcc;  //Mobile Country Code
+        String mnc;  //mobile network code
+        String cellid; //Cell ID
+        String lac;  //Location Area Code
+
+        Boolean error;
+        String strURLSent;
+        String GetOpenCellID_fullresult;
+
+        String latitude;
+        String longitude;
+
+        public Boolean isError(){
+            return error;
+        }
+
+        public void setMcc(String value){
+            mcc = value;
+        }
+
+        public void setMnc(String value){
+            mnc = value;
+        }
+
+        public void setCallID(int value){
+            cellid = String.valueOf(value);
+        }
+
+        public void setCallLac(int value){
+            lac = String.valueOf(value);
+        }
+
+        public String getLocation(){
+            return(latitude + " : " + longitude);
+        }
+
+        public String getLatitude(){
+            return latitude;
+        }
+
+        public String getLongitude(){
+            return longitude;
+        }
+
+        public String groupURLSent(){
+            Uri.Builder builder = new Uri.Builder();
+            builder.scheme("http")
+                    .authority("www.opencellid.org")
+                    .appendPath("cell")
+                    .appendPath("get")
+
+                    .appendQueryParameter("mcc", mcc)
+                    .appendQueryParameter("mnc", mnc)
+                    .appendQueryParameter("cellid", cellid)
+                    .appendQueryParameter("lac", lac);
+            strURLSent = builder.build().toString();
+              return strURLSent;
+            //String strURLSent1 = "http://www.opencellid.org/cell/get?mcc="+mcc+"&mnc="+mnc+"&cellid="+cellid+"&lac="+lac+"&fmt=txt";
+        }
+
+        public String getstrURLSent(){
+            return strURLSent;
+        }
+
+        public String getGetOpenCellID_fullresult(){
+            return GetOpenCellID_fullresult;
+        }
+
+        public void GetOpenCellID() throws Exception {
+            String y=groupURLSent();
+            URL x= new URL(y);
+            HttpURLConnection connection = (HttpURLConnection) x.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod("GET");
+            connection.connect();
+            StringBuffer chaine = new StringBuffer("");
+
+            InputStream inputStream = connection.getInputStream();
+
+       //     OutputStreamWriter writer = new OutputStreamWriter(
+         //           connection.getOutputStream());
+            //HttpClient client = new DefaultHttpClient();
+            //HttpGet request = new HttpGet(strURLSent);
+            //HttpResponse response = client.execute(request);
+           // GetOpenCellID_fullresult = EntityUtils.toString(response.getEntity());
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
+            String xx = "";
+            while ((xx = rd.readLine()) != null) {
+                chaine.append(xx);
+            }
+            GetOpenCellID_fullresult=chaine.toString();
+            spliteResult();
+        }
+
+        private void spliteResult(){
+            if(GetOpenCellID_fullresult.equalsIgnoreCase("err")){
+                error = true;
+            }else{
+                error = false;
+                String[] tResult = GetOpenCellID_fullresult.split(",");
+                latitude = tResult[0];
+                longitude = tResult[1];
+            }
+
+
+        }
+    }
+
+    int myLatitude, myLongitude;
+    OpenCellID openCellID;
+    TextView textGsmCellLocation = (TextView)findViewById(R.id.gsmcelllocation);
+    TextView textMCC = (TextView)findViewById(R.id.mcc);
+    TextView textMNC = (TextView)findViewById(R.id.mnc);
+    TextView textCID = (TextView)findViewById(R.id.cid);
+    TextView textLAC = (TextView)findViewById(R.id.lac);
+    TextView textGeo = (TextView)findViewById(R.id.geo);
+    TextView textRemark = (TextView)findViewById(R.id.remark);
+
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_telephony);
+
+
+        Button btnViewMap = (Button)findViewById(R.id.map);
+
+
+        btnViewMap.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                String stringLoc = "geo:" + openCellID.getLatitude() + "," + openCellID.getLongitude();
+
+                Toast.makeText(telephony.this, stringLoc, Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(stringLoc));
+                startActivity(intent);
+            }
+        });
+
+        //retrieve a reference to an instance of TelephonyManager
+        final Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                GsmCellLocation cellLocation = (GsmCellLocation) telephonyManager.getCellLocation();
+
+                String networkOperator = telephonyManager.getNetworkOperator();
+                String mcc = networkOperator.substring(0, 3);
+                String mnc = networkOperator.substring(3);
+                textMCC.setText("mcc: " + mcc);
+                textMNC.setText("mnc: " + mnc);
+
+                int cid = cellLocation.getCid();
+                int lac = cellLocation.getLac();
+                textGsmCellLocation.setText(cellLocation.toString());
+                textCID.setText("gsm cell id: " + String.valueOf(cid));
+                textLAC.setText("gsm location area code: " + String.valueOf(lac));
+
+                openCellID = new OpenCellID();
+
+                openCellID.setMcc(mcc);
+                openCellID.setMnc(mnc);
+                openCellID.setCallID(cid);
+                openCellID.setCallLac(lac);
+                try {
+                    openCellID.GetOpenCellID();
+
+                    if (!openCellID.isError()) {
+                        textGeo.setText(openCellID.getLocation());
+                        textRemark.setText("\n\n"
+                                + "URL sent: \n" + openCellID.getstrURLSent() + "\n\n"
+                                + "response: \n" + openCellID.GetOpenCellID_fullresult);
+                    } else {
+                        textGeo.setText("Error");
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    textGeo.setText("Exception: " + e.toString());
+                }
+            }
+            });
+            thread.start();
+        }
+    }
+
+
+
+
+/*    int myLatitude=0, myLongitude=0;
+String mnc,mcc;int lac,cid;
+    @Override
+    protected void onCreate (Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_telephony);
+
+        final Thread thread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+
+
+                TextView textGsmCellLocation = (TextView) findViewById(R.id.gsmcelllocation);
+                TextView textCID = (TextView) findViewById(R.id.cid);
+                TextView textLAC = (TextView) findViewById(R.id.lac);
+                TextView textGeo = (TextView) findViewById(R.id.geo);
+                TextView mncc = (TextView) findViewById(R.id.mnc);
+                TextView mccc = (TextView) findViewById(R.id.mcc);
+
+                //retrieve a reference to an instance of TelephonyManager
+                TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                GsmCellLocation cellLocation = (GsmCellLocation) telephonyManager.getCellLocation();
+
+                 cid = cellLocation.getCid();
+                 lac = cellLocation.getLac();
+                textGsmCellLocation.setText(cellLocation.toString());
+                textCID.setText("gsm cell id: " + String.valueOf(cid));
+                textLAC.setText("gsm location area code: " + String.valueOf(lac));
+                String networkOperator = telephonyManager.getNetworkOperator();
+
+                if (networkOperator != null) {
+                      mcc = networkOperator.substring(0, 3);
+                    mnc = networkOperator.substring(3);
+                    mccc.setText("gsm mcc: "+mcc);
+                    mncc.setText("gsm mnc: "+mnc);
+                }
+                if (RqsLocation(cid, lac)) {
+                    textGeo.setText(
+                            String.valueOf((float) myLatitude / 1000000)
+                                    + " : "
+                                    + String.valueOf((float) myLongitude / 1000000));
+                } else {
+                    textGeo.setText("Can't find Location!");
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }}
+
+            private Boolean RqsLocation ( int cid, int lac){
+
+                Boolean result = false;
+
+                String urlmmap = "http://opencellid.org/cell/get?key=ba67d026-f4bc-4382-a000-6fc179771ce7&mcc="+mcc+"&mnc="+mnc+"&cellid="+cid+"&lac="+lac;
+
+                try {
+                    URL url = new URL(urlmmap);
+                    URLConnection conn = url.openConnection();
+                    HttpURLConnection httpConn = (HttpURLConnection) conn;
+                    httpConn.setRequestMethod("POST");
+                    httpConn.setDoOutput(true);
+                    httpConn.setDoInput(true);
+                    httpConn.connect();
+
+                    OutputStream outputStream = httpConn.getOutputStream();
+                    WriteData(outputStream, cid, lac);
+
+                    InputStream inputStream = httpConn.getInputStream();
+                    DataInputStream dataInputStream = new DataInputStream(inputStream);
+
+                    dataInputStream.readShort();
+                    dataInputStream.readByte();
+                    int code = dataInputStream.readInt();
+                    if (code == 0) {
+                        myLatitude = dataInputStream.readInt();
+                        myLongitude = dataInputStream.readInt();
+
+                        result = true;
+
+                    }
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                return result;
+
+            }
+
+            private void WriteData (OutputStream out,int cid, int lac)
+            throws IOException
+            {
+                DataOutputStream dataOutputStream = new DataOutputStream(out);
+                dataOutputStream.writeShort(21);
+                dataOutputStream.writeLong(0);
+                dataOutputStream.writeUTF("en");
+                dataOutputStream.writeUTF("Android");
+                dataOutputStream.writeUTF("1.0");
+                dataOutputStream.writeUTF("Web");
+                dataOutputStream.writeByte(27);
+                dataOutputStream.writeInt(0);
+                dataOutputStream.writeInt(0);
+                dataOutputStream.writeInt(3);
+                dataOutputStream.writeUTF("");
+
+                dataOutputStream.writeInt(cid);
+                dataOutputStream.writeInt(lac);
+
+                dataOutputStream.writeInt(0);
+                dataOutputStream.writeInt(0);
+                dataOutputStream.writeInt(0);
+                dataOutputStream.writeInt(0);
+                dataOutputStream.flush();
+            }
+
+        });
+        thread.start();
+    }
+}
+
+*/

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "E:\\Android\\AndroidStudioProjects\\Findroid\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi-v4\\logo1.png",
+        "source": "E:\\Android\\AndroidStudioProjects\\Findroid\\app\\src\\main\\res\\mipmap-hdpi\\logo1.png"
+    },
+    {
+        "merged": "E:\\Android\\AndroidStudioProjects\\Findroid\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi-v4\\ic_launcher.png",
+        "source": "E:\\Android\\AndroidStudioProjects\\Findroid\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    }
+]

@@ -1,0 +1,76 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <LinearLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        >
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:background="@android:color/holo_blue_dark"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true">
+
+            <ImageView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About Us"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="25dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+
+                android:layout_gravity="center_horizontal|center_vertical"/>
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:layout_gravity="center_horizontal"
+            android:text="In the current world, we constantly need to travel around unknown places. Our phones are the only thing that keeps us touch with our family and friends. We store important information and data on our phone. But, there is always a threat to security of our phone. As it can get stolen or we can lose it to an unknown place. This problem is tackled by our “Cell Tracker” app. Our application  acts as an “Anti-theft phone retrieval technology”.  The primary project goals consist of:
+            •	The main purpose of &quot;Cell tracker&quot; is to track the user location without gps and by making use of network under which the phone is currently operational.
+            •	The application stores a list of trusted contacts which will be used to sending the tracked cell location to them using SMS.
+            •	The app will have a lock option through which only the owner would be able to access the app.  "
+            android:textSize="17dp"
+            android:autoText="false" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/testers"
+            android:layout_gravity="center_horizontal"
+             android:autoText="false" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BACK"
+            android:id="@+id/button10"
+            android:layout_gravity="center_horizontal"
+            android:background="#106b0e"
+            android:textColor="#fcfcfc" />
+
+
+    </LinearLayout>
+
+
+
+</ScrollView>

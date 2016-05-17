@@ -1,0 +1,116 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <LinearLayout
+
+        android:layout_width="fill_parent"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:background="@android:color/holo_blue_dark"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true">
+
+            <ImageView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="25dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:id="@+id/welcome" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="42dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <Switch
+                android:layout_width="227dp"
+                android:layout_height="wrap_content"
+                android:text="Anti-Theft Mode"
+                android:textSize="40px"
+                android:id="@+id/switch2"
+                android:enabled="true"
+                android:checked="false"
+                style="@style/AppTheme"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="98dp"
+            android:layout_height="wrap_content"
+            android:text="Locate Me"
+            android:id="@+id/locate"
+            android:layout_gravity="center_horizontal"
+            android:longClickable="false"
+            android:lines="3" />
+
+        <Button
+            android:layout_width="98dp"
+            android:layout_height="wrap_content"
+            android:text="Trusted Contacts"
+            android:id="@+id/button2"
+            android:layout_gravity="center_horizontal"
+            android:longClickable="false"
+            android:lines="3" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Profile"
+            android:id="@+id/profile"
+            android:layout_gravity="center_horizontal"
+            android:lines="3" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About Us"
+            android:id="@+id/button3"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.49"
+            android:lines="3" />
+
+        <Button
+            android:layout_width="86dp"
+            android:layout_height="wrap_content"
+            android:text="Log Out"
+            android:id="@+id/button8"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#fff"
+            android:longClickable="false"
+            android:background="#106b0e" />
+
+
+    </LinearLayout>
+
+
+
+</ScrollView>
